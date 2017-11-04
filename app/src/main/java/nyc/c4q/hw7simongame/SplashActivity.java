@@ -24,6 +24,6 @@ public class SplashActivity extends AppCompatActivity {
         };
 
         handler.postDelayed(r, 15000);
-        Toast.makeText(getApplicationContext(), "rules", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Watch the buttons and repeat the same order", Toast.LENGTH_LONG).show();
     }
 }
