@@ -1,19 +1,22 @@
 package nyc.c4q.hw7simongame;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import java.util.StringTokenizer;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -24,12 +27,16 @@ public class GameActivity extends AppCompatActivity {
     private Button buttonStart;
     private int timeWait = 1;
     private Score score;
+    private TextView bestScoreTV;
+    private TextView roundsView;
+    private int bestScore;
     Animation animation = new AlphaAnimation(1f, 0f);
-    private TextView rounds;
     private static final String KEY_SCORE = "score";
     private static final String KEY_ArrayList = "arrayList";
     private static final String KEY_TEMP_ArrayList = "tempArrayList";
     private static final String KEY_PARCELABLE = "parcelable";
+    private static final String SHARED_PREFERENCES = "savedScore";
+    private static final String SHARED_PREFERENCES_BESTSCORE = "savedBestScore";
 
 
     Queue<Integer> queue = new LinkedList<>();
@@ -65,15 +72,17 @@ public class GameActivity extends AppCompatActivity {
         buttonYellow3.setBackgroundResource(R.drawable.yellow);
 
         buttonStart = findViewById(R.id.start);
-        rounds = findViewById(R.id.rounds);
+        roundsView = findViewById(R.id.rounds);
+        bestScoreTV = findViewById(R.id.best_score);
 
         animation.setDuration(80);
+        bestScoreTV.setText(String.valueOf(retrieveBestScore()));
 
 
         if (savedInstanceState != null) {
 
             score = savedInstanceState.getParcelable(KEY_PARCELABLE);
-            rounds.setText("SCORE" + score.getValue());
+            roundsView.setText("SCORE" + score.getValue());
             deletedNum = savedInstanceState.getIntegerArrayList(KEY_ArrayList);
             temp = savedInstanceState.getIntegerArrayList(KEY_TEMP_ArrayList);
             queue.addAll(temp);
@@ -98,6 +107,8 @@ public class GameActivity extends AppCompatActivity {
                 int number = addToArrayList(buttonRed0);
                 if (number != 0) {
                     Toast.makeText(getApplicationContext(), "you lost!", Toast.LENGTH_LONG).show();
+                    saveBestSCore();
+                    score.setValue(0);
                 } else if (queue.size() == 0) {
 
                     startNewRound();
@@ -111,6 +122,8 @@ public class GameActivity extends AppCompatActivity {
                 int number = addToArrayList(buttonBlue1);
                 if (number != 1) {
                     Toast.makeText(getApplicationContext(), "you lost!", Toast.LENGTH_LONG).show();
+                    saveBestSCore();
+                    score.setValue(0);
                 } else if (queue.size() == 0) {
                     startNewRound();
                 }
@@ -123,6 +136,8 @@ public class GameActivity extends AppCompatActivity {
                 int number = addToArrayList(buttonGreen2);
                 if (number != 2) {
                     Toast.makeText(getApplicationContext(), "you lost!", Toast.LENGTH_LONG).show();
+                    saveBestSCore();
+                    score.setValue(0);
                 } else if (queue.size() == 0) {
                     startNewRound();
 
@@ -136,6 +151,8 @@ public class GameActivity extends AppCompatActivity {
                 int number = addToArrayList(buttonYellow3);
                 if (number != 3) {
                     Toast.makeText(getApplicationContext(), "you lost!", Toast.LENGTH_LONG).show();
+                    saveBestSCore();
+                    score.setValue(0);
                 } else if (queue.size() == 0) {
                     startNewRound();
 
@@ -188,9 +205,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void startNewRound() {
+
         int x = score.getValue()+1;
         score.setValue(x);
-        rounds.setText("SCORE" + x);
+        roundsView.setText("SCORE" + x);
         queue.addAll(deletedNum);
         deletedNum.clear();
         randomNumber();
@@ -202,4 +220,25 @@ public class GameActivity extends AppCompatActivity {
         deletedNum.add(number);
         return number;
     }
+
+
+    public void saveBestSCore() {
+        int currentScore = score.getValue();
+
+        if (currentScore > bestScore) {
+            bestScoreTV.setText(String.valueOf(currentScore));
+            SharedPreferences prefs = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt(SHARED_PREFERENCES_BESTSCORE, currentScore);
+            editor.apply();
+            bestScore = currentScore;
+        }
+    }
+
+    public int retrieveBestScore() {
+        SharedPreferences preferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        int retrievedScore = preferences.getInt(SHARED_PREFERENCES_BESTSCORE, 0);
+        return retrievedScore;
+    }
 }
+
