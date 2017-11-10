@@ -26,9 +26,10 @@ public class GameActivity extends AppCompatActivity {
     private Score score;
     Animation animation = new AlphaAnimation(1f, 0f);
     private TextView rounds;
-    private static final String KEY_SCORE = "";
-    private static final String KEY_ArrayList = "";
-    private static final String KEY_TEMP_ArrayList = "";
+    private static final String KEY_SCORE = "score";
+    private static final String KEY_ArrayList = "arrayList";
+    private static final String KEY_TEMP_ArrayList = "tempArrayList";
+    private static final String KEY_PARCELABLE = "parcelable";
 
 
     Queue<Integer> queue = new LinkedList<>();
@@ -38,8 +39,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        int y = score.getValue();
-        outState.putInt (KEY_SCORE, y);
+        outState.putParcelable(KEY_PARCELABLE, score);
         outState.putIntegerArrayList(KEY_ArrayList, deletedNum);
         temp.addAll(queue);
         outState.putIntegerArrayList(KEY_TEMP_ArrayList, temp);
@@ -69,15 +69,17 @@ public class GameActivity extends AppCompatActivity {
 
         animation.setDuration(80);
 
-        score = new Score(0);
 
         if (savedInstanceState != null) {
-            int savedScore = savedInstanceState.getInt(KEY_SCORE);
-            score.setValue(savedScore);
-            rounds.setText("SCORE" + savedScore);
+
+            score = savedInstanceState.getParcelable(KEY_PARCELABLE);
+            rounds.setText("SCORE" + score.getValue());
             deletedNum = savedInstanceState.getIntegerArrayList(KEY_ArrayList);
             temp = savedInstanceState.getIntegerArrayList(KEY_TEMP_ArrayList);
             queue.addAll(temp);
+        }
+        else{
+            score = new Score(0);
         }
 
         buttonStart.setOnClickListener(new View.OnClickListener() {
