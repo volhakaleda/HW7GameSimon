@@ -10,12 +10,13 @@
     android:layout_height="match_parent"
     android:rowCount="2"
     android:columnCount="2"
+    android:layout_gravity="center"
     tools:context="nyc.c4q.hw7simongame.GameActivity">
 
     <Button
         android:id="@+id/red"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:background="@color/colorRed"
         android:layout_gravity="center"
         android:layout_marginBottom="0dp"
@@ -23,16 +24,15 @@
 
     <Button
         android:id="@+id/blue"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:background="@color/colorBlue"
-        android:layout_gravity="center"
-
         />
+
     <Button
         android:id="@+id/green"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:background="@color/colorGreen"
         android:layout_gravity="center"
 
@@ -40,10 +40,9 @@
 
     <Button
         android:id="@+id/yellow"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:background="@color/colorYellow"
-        android:layout_gravity="center"
         />
 
     <Button

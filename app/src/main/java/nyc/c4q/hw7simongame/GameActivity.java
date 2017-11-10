@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class GameActivity extends AppCompatActivity {
     private static final String KEY_TEMP_ArrayList = "";
 
 
-    Queue<Integer> queue = new LinkedList<Integer>();
+    Queue<Integer> queue = new LinkedList<>();
     ArrayList<Integer> deletedNum = new ArrayList<>();
     ArrayList<Integer> temp = new ArrayList<>();
 
@@ -52,9 +53,17 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         buttonBlue1 = findViewById(R.id.blue);
+        buttonBlue1.setBackgroundResource(R.drawable.blue);
+
         buttonRed0 = findViewById(R.id.red);
+        buttonRed0.setBackgroundResource(R.drawable.image);
+
         buttonGreen2 = findViewById(R.id.green);
+        buttonGreen2.setBackgroundResource(R.drawable.green);
+
         buttonYellow3 = findViewById(R.id.yellow);
+        buttonYellow3.setBackgroundResource(R.drawable.yellow);
+
         buttonStart = findViewById(R.id.start);
         rounds = findViewById(R.id.rounds);
 
