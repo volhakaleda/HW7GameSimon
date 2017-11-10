@@ -65,6 +65,19 @@
         android:textSize="20sp"
         />
 
+    <TextView
+        android:id="@+id/best_score"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_column="1"
+        android:layout_gravity="center"
+        android:background="@color/grey"
+        android:backgroundTint="@color/silver"
+        android:hint="best score"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+
 </GridLayout>
 
 </ScrollView>
